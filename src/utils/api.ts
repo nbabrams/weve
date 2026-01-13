@@ -2,7 +2,7 @@ import { projectId, publicAnonKey } from './supabase/info';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { createClient as getGlobalClient } from './supabase/client';
 
-const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-9cac149a`;
+const API_BASE = `https://${projectId}.supabase.co/functions/v1/server/make-server-9cac149a`;
 const DEFAULT_TIMEOUT = 25000; // 25 seconds
 
 // Helper to get a valid access token, handling auto-refresh and storage location
