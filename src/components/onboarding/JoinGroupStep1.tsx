@@ -1,0 +1,81 @@
+import { useState } from 'react';
+import { ChevronLeft } from 'lucide-react';
+
+export function JoinGroupStep1({
+  onBack,
+  onContinue,
+}: {
+  onBack: () => void;
+  onContinue: (inviteCode: string) => void;
+}) {
+  const [code, setCode] = useState('');
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (value.length <= 8) {
+      setCode(value);
+    }
+  };
+
+  const handleContinue = () => {
+    if (code.length === 8) {
+      onContinue(code);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#fbf9f8]">
+      {/* Header */}
+      <div className="bg-white h-[69px] border-b border-[#f6f7f9]">
+        <div className="flex items-center gap-3 h-full px-4">
+          <button
+            onClick={onBack}
+            className="rounded-[12px] w-[36px] h-[36px] flex items-center justify-center hover:bg-gray-50 transition-colors"
+            aria-label="Go back"
+          >
+            <ChevronLeft className="w-5 h-5 text-[#264859]" />
+          </button>
+          <h2 className="font-['Inter:Regular',sans-serif] font-normal text-[16px] text-[#264859] tracking-[-0.3125px]">
+            Join Group
+          </h2>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="p-4 pt-6">
+        <div className="bg-white rounded-[16px] shadow-[0px_2px_8px_0px_rgba(38,72,89,0.08)] p-6 max-w-md mx-auto">
+          <div className="flex flex-col gap-6">
+            {/* Invite Code Input */}
+            <div className="flex flex-col gap-2">
+              <h3 className="font-['Inter:Regular',sans-serif] font-normal text-[16px] text-[#264859] tracking-[-0.3125px]">
+                Invite Code
+              </h3>
+              <p className="font-['Inter:Regular',sans-serif] font-normal text-[16px] text-[#67717e] leading-[24px] tracking-[-0.3125px]">
+                Enter the code shared by your friend
+              </p>
+              <input
+                type="text"
+                value={code}
+                onChange={handleCodeChange}
+                placeholder="XXXXXXXX"
+                maxLength={8}
+                className="bg-[#f6f7f9] h-[36px] rounded-[10px] px-3 font-['Inter:Regular',sans-serif] font-normal text-[16px] text-[#264859] tracking-[1.2875px] uppercase placeholder:text-[#67717e] border border-[#f6f7f9] focus:outline-none focus:ring-2 focus:ring-[#BE592A] focus:border-transparent"
+              />
+            </div>
+
+            {/* Continue Button */}
+            <button
+              onClick={handleContinue}
+              disabled={code.length !== 8}
+              className={`h-[36px] rounded-[10px] font-['Inter:Medium',sans-serif] font-medium text-[14px] text-white leading-[20px] tracking-[-0.1504px] transition-opacity ${
+                code.length === 8 ? 'bg-[#BE592A] hover:opacity-90' : 'bg-[#BE592A] opacity-50 cursor-not-allowed'
+              }`}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
